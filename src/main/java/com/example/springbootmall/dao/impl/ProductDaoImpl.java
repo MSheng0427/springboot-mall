@@ -44,7 +44,11 @@ public class ProductDaoImpl implements ProductDao {
 
     }
 
-
+    /**
+     * 新增商品
+     * @param productRequst
+     * @return
+     */
     public Integer createProduct(ProductRequst productRequst) {
         String sql = "INSERT INTO product(product_name, category, image_url, price, stock," +
                 "description, created_date, last_modified_date) " +
@@ -68,6 +72,33 @@ public class ProductDaoImpl implements ProductDao {
 
         int productId = keyHolder.getKey().intValue();
         return productId;
+
+
+    }
+
+    /**
+     * 修改商品資料
+     * @param productId :商品ID
+     * @param productRequst : 修改商品資訊
+     */
+    public void updateProduct(Integer productId,ProductRequst productRequst){
+        String sql  = "UPDATE product SET product_name=:product_name,category=:category,image_url=:image_url,price=:price,stock=:stock,"+
+                      "description=:description,last_modified_date=:last_modified_date "+
+                      "WHERE product_id = :product_id ";
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("product_id",productId);
+        map.put("product_name",productRequst.getProductName());
+        map.put("category",productRequst.getCategory().toString());
+        map.put("image_url",productRequst.getImageUrl());
+        map.put("price",productRequst.getPrice());
+        map.put("stock",productRequst.getStock());
+        map.put("description",productRequst.getDescription());
+
+        map.put("last_modified_date",new Date());
+
+        namedParameterJdbcTemplate.update(sql,map);
+
 
 
     }
