@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
 
+
     @Autowired
     private ProductService productService;
 
@@ -21,6 +22,7 @@ public class ProductController {
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
 
         Product product = productService.getProductById(productId);
+
 
 
         if(product != null){

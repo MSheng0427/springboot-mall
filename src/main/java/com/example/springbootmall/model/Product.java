@@ -9,6 +9,7 @@ public class Product {
   private String category;
   private String imageUrl;
   private Integer price;
+
   private Integer stock;
   private String description;
   private Date createdDate;

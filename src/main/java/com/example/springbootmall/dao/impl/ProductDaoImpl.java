@@ -23,7 +23,6 @@ public class ProductDaoImpl implements ProductDao {
         String sql ="SELECT product_id,product_name, category, image_url, price, stock," +
                 " description, created_date, last_modified_date " +
                 "from product where product_id = :productId";
-
         Map<String,Object> map = new HashMap<>();
         map.put("productId",productId);
 
@@ -31,6 +30,7 @@ public class ProductDaoImpl implements ProductDao {
 
 
         if(productList.size() > 0){
+
 
             System.out.println("1231231212312123");
 
