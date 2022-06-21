@@ -1,5 +1,6 @@
 package com.example.springbootmall.service.impl;
 
+import com.example.springbootmall.constant.ProductCategory;
 import com.example.springbootmall.dao.ProductDao;
 import com.example.springbootmall.dto.ProductRequst;
 import com.example.springbootmall.model.Product;
@@ -7,11 +8,18 @@ import com.example.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductDao productDao;
+
+
+    public List<Product> getProducts(ProductCategory category , String search){
+        return productDao.getProducts(category,search);
+    }
 
     @Override
     public Product getProductById(Integer productId) {

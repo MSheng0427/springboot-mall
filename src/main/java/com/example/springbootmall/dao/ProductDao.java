@@ -1,8 +1,11 @@
 package com.example.springbootmall.dao;
 
+import com.example.springbootmall.constant.ProductCategory;
 import com.example.springbootmall.dto.ProductRequst;
 import com.example.springbootmall.model.Product;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public interface ProductDao {
@@ -16,4 +19,6 @@ public interface ProductDao {
     void updateProduct(Integer productId , ProductRequst productRequst);
 
     void deleteProductById(Integer productId);
+
+    List<Product> getProducts(ProductCategory category,String search);
 }
