@@ -37,17 +37,8 @@ public class ProductDaoImpl implements ProductDao {
 
         Map<String,Object> map = new HashMap<>();
 
-        // 判斷 category 是否有值 != null 加入 category 條件式
-        // 查詢條件
-        if(productQueryParams.getCategory() != null){
-            sql = sql +" AND category = :category ";
-            map.put("category" ,productQueryParams.getCategory().name());
-        }
+        sql  = addFilteringSql(sql,map,productQueryParams);
 
-        if(productQueryParams.getSearch() != null){
-            sql = sql +" AND  product_name LIKE :search ";
-            map.put("search" ,"%"+productQueryParams.getSearch()+"%");
-        }
 
         // 排序
         sql  = sql +" ORDER BY "+productQueryParams.getOrderBy() + " "+productQueryParams.getSort();
@@ -73,19 +64,8 @@ public class ProductDaoImpl implements ProductDao {
         String sql  = "SELECT count(*) FROM Product WHERE 1 = 1 ";
 
         Map<String,Object> map = new HashMap<>();
+        sql  = addFilteringSql(sql,map,productQueryParams);
 
-
-        // 判斷 category 是否有值 != null 加入 category 條件式
-        // 查詢條件
-        if(productQueryParams.getCategory() != null){
-            sql = sql +" AND category = :category ";
-            map.put("category" ,productQueryParams.getCategory().name());
-        }
-
-        if(productQueryParams.getSearch() != null){
-            sql = sql +" AND  product_name LIKE :search ";
-            map.put("search" ,"%"+productQueryParams.getSearch()+"%");
-        }
         Integer total = namedParameterJdbcTemplate.queryForObject(sql,map,Integer.class);
         return total;
     }
@@ -176,5 +156,28 @@ public class ProductDaoImpl implements ProductDao {
 
         map.put("product_id",productId);
         namedParameterJdbcTemplate.update(sql,map);
+    }
+
+
+    /**
+     * 拼接查詢條件
+     * @param sql
+     * @param map
+     * @param productQueryParams
+     * @return
+     */
+    private  String addFilteringSql(String sql , Map<String ,Object> map ,ProductQueryParams productQueryParams){
+        // 判斷 category 是否有值 != null 加入 category 條件式
+        // 查詢條件
+        if(productQueryParams.getCategory() != null){
+            sql = sql +" AND category = :category ";
+            map.put("category" ,productQueryParams.getCategory().name());
+        }
+
+        if(productQueryParams.getSearch() != null){
+            sql = sql +" AND  product_name LIKE :search ";
+            map.put("search" ,"%"+productQueryParams.getSearch()+"%");
+        }
+        return sql  ;
     }
 }
